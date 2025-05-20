@@ -1,38 +1,48 @@
 import React, { useState } from "react";
 import { FaUpload, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import axios from "axios";
 
 const UploadMaterial = () => {
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("openmp");
   const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("topic", topic);
-    formData.append("file", file);
-  
+    if (file) formData.append("file", file);
+    if (url) formData.append("url", url);
+
     try {
-      const response = await fetch("http://localhost:5000/api/materials/upload", {
+      const res = await fetch("http://localhost:5000/api/materials/upload", {
         method: "POST",
         body: formData,
       });
-  
-      const result = await response.json();
-      setMessage(result.message);
-      setError(false);
+
+      const result = await res.json();
+
+      if (res.ok) {
+        setMessage("Material uploaded successfully!");
+        setError(false);
+        setTitle("");
+        setTopic("openmp");
+        setFile(null);
+        setUrl("");
+      } else {
+        throw new Error(result.message || "Upload failed");
+      }
     } catch (err) {
       console.error("Upload failed:", err);
       setMessage("Failed to upload material.");
       setError(true);
     }
   };
-  
-  
+
   return (
     <div style={styles.container}>
       <h2 style={styles.heading}>Upload Study Material</h2>
@@ -68,10 +78,20 @@ const UploadMaterial = () => {
           <input
             type="file"
             onChange={(e) => setFile(e.target.files[0])}
-            required
             style={styles.inputFile}
           />
           {file && <p style={styles.filename}>Selected: {file.name}</p>}
+        </div>
+
+        <div style={styles.field}>
+          <label style={styles.label}>Or Enter URL</label>
+          <input
+            type="url"
+            placeholder="https://example.com/resource"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            style={styles.input}
+          />
         </div>
 
         <button type="submit" style={styles.button}>
@@ -79,9 +99,13 @@ const UploadMaterial = () => {
         </button>
 
         {message && (
-          <div style={{ ...styles.message, ...(error ? styles.error : styles.success) }}>
-            {error ? <FaTimesCircle /> : <FaCheckCircle />}
-            {message}
+          <div
+            style={{
+              ...styles.message,
+              ...(error ? styles.error : styles.success),
+            }}
+          >
+            {error ? <FaTimesCircle /> : <FaCheckCircle />} {message}
           </div>
         )}
       </form>

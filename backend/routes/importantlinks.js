@@ -11,11 +11,31 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post("/", upload.single("file"), async (req, res) => {
-  const { title } = req.body;
-  const newFile = new ImportantLink({ title, filename: req.file.filename });
-  await newFile.save();
-  res.status(201).json({ message: "Notice uploaded" });
+  try {
+    const { title, url } = req.body;
+
+    console.log("Incoming title:", title);
+    console.log("Incoming url:", url);
+    console.log("Incoming file:", req.file);
+
+    if (!title || (!req.file && !url)) {
+      return res.status(400).json({ message: "Please provide either a file or a URL." });
+    }
+
+    const newLink = new ImportantLink({
+      title,
+      filename: req.file ? req.file.filename : null,
+      url: url && url.trim() !== "" ? url : null,
+    });
+
+    await newLink.save();
+    res.status(201).json({ message: "Notice uploaded" });
+  } catch (err) {
+    console.error("Error uploading link:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
+
 
 router.get("/", async (req, res) => {
   const links = await ImportantLink.find();

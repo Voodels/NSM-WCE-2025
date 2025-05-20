@@ -68,7 +68,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto"}}>
+    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
       {/* About Us Section */}
       <section style={{ marginTop: "20px" }}>
         <h2
@@ -81,17 +81,47 @@ const Home = () => {
         >
           About Progarm
         </h2>
-        <p style={{ justifyContent: "center", alignItems: "center", textJustify:"inter-word"}}>
-        The <b>Faculty Development Program</b> is offered in association with <b>CDAC, Pune under the National Supercomputing Mission (NSM) activity</b>. This FDP was aimed as an introduction to those, looking at High Performance Computing from the perspective of a researchers, academician and instructor with the hands-on from Industry experts and academicians. The High Performance Computing can act as a fragment to connect various domains of science and engineering. The fundamental objective of FDP was to provide the platform for presentation, discussion and implementation of concepts in area of HPC. The attendees will be provided with depth-in knowledge of computation power, utilization and applications in the field of HPC.
-        The Faculty Development Program (FDP) on OpenMP, MPI, and CUDA is proud to collaborate with esteemed organizations such as CDAC, NVidia, Intel, AMD, and renowned research organizations. These collaborations aim to bring the latest expertise, resources, and industry insights to the program, ensuring participants receive high-quality training and exposure to cutting-edge technologies. CDAC (Centre for Development of Advanced Computing) is a premier research and development organization in India, specializing in high-performance computing, software development, and advanced IT solutions. Their collaboration with the FDP brings expertise in parallel computing and access to resources that enhance the program's content and delivery 
-        The key take away after attending the FDP are: 
+        <p
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            textJustify: "inter-word",
+          }}
+        >
+          The <b>Faculty Development Program</b> is offered in association with{" "}
+          <b>
+            CDAC, Pune under the National Supercomputing Mission (NSM) activity
+          </b>
+          . This FDP was aimed as an introduction to those, looking at High
+          Performance Computing from the perspective of a researchers,
+          academician and instructor with the hands-on from Industry experts and
+          academicians. The High Performance Computing can act as a fragment to
+          connect various domains of science and engineering. The fundamental
+          objective of FDP was to provide the platform for presentation,
+          discussion and implementation of concepts in area of HPC. The
+          attendees will be provided with depth-in knowledge of computation
+          power, utilization and applications in the field of HPC. The Faculty
+          Development Program (FDP) on OpenMP, MPI, and CUDA is proud to
+          collaborate with esteemed organizations such as CDAC, NVidia, Intel,
+          AMD, and renowned research organizations. These collaborations aim to
+          bring the latest expertise, resources, and industry insights to the
+          program, ensuring participants receive high-quality training and
+          exposure to cutting-edge technologies. CDAC (Centre for Development of
+          Advanced Computing) is a premier research and development organization
+          in India, specializing in high-performance computing, software
+          development, and advanced IT solutions. Their collaboration with the
+          FDP brings expertise in parallel computing and access to resources
+          that enhance the program's content and delivery The key take away
+          after attending the FDP are:
         </p>
         <p>
-        a. To introduce the fundamentals of parallel computing including parallel architectures, programming models and commonly used parallel programing 
-        constructs/libraries/languages.
+          a. To introduce the fundamentals of parallel computing including
+          parallel architectures, programming models and commonly used parallel
+          programing constructs/libraries/languages.
         </p>
         <p>
-        b. To deliver hands-on sessions to provide experience applying HPC tools on both CPU and GPU platforms.
+          b. To deliver hands-on sessions to provide experience applying HPC
+          tools on both CPU and GPU platforms.
         </p>
       </section>
 
@@ -194,38 +224,58 @@ const Home = () => {
 
       {/* Important Links Section */}
       <section style={{ marginTop: "20px", textAlign: "center" }}>
-        <h2 style={{ background: "#004080", height: "50px", color: "white" }}>
-          Important Links
-        </h2>
-        <div
+        <h2
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "10px",
-            maxWidth: "600px",
-            margin: "0 auto",
+            background: "#004080",
+            height: "50px",
+            color: "white",
+            lineHeight: "50px",
           }}
         >
+          Important Links
+        </h2>
+        <ul
+          style={{
+            columns: 2,
+            columnGap: "100px",
+            maxWidth: "600px",
+            margin: "20px auto",
+            paddingLeft: "20px",
+            listStyleType: "disc",
+            textAlign: "left",
+          }}
+        > 
           {importantLinks.map((link, index) => (
-            <a
-              key={index}
-              href={`http://localhost:5000/uploads/${link.filename}`}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                padding: "10px",
-                background: "#f9f9f9",
-                color: "black",
-                border: "1px solid black",
-                textDecoration: "none",
-                borderRadius: "5px",
-                textAlign: "center",
-              }}
-            >
-              {link.title}
-            </a>
+            <li key={index} style={{ marginBottom: "10px" }}>
+              {link.url ? (
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#004080",
+                    textDecoration: "none",
+                    fontWeight: "500",
+                   }}
+                >
+                  {link.title}
+                </a>
+              ) : (
+                <a
+                  href={`http://localhost:5000/uploads/${link.filename}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: "#004080",
+                    textDecoration: "none",
+                    fontWeight: "500"
+                  }}
+                >
+                  {link.title}
+                </a>
+              )}
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       {/* Coordinators Section */}

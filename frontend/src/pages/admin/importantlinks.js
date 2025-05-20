@@ -5,56 +5,74 @@ import { FaCheckCircle, FaTimesCircle, FaLink } from "react-icons/fa";
 const AddImportantLink = () => {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    if (file) formData.append("file", file);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("title", title);
+  if (file) formData.append("file", file);
+  if (url) formData.append("url", url);
 
-    try {
-      await axios.post("http://localhost:5000/api/importantlinks", formData, {
-        headers: { "Content-Type": "multipart/form-data" }
-      });
-      setMessage("Notice uploaded successfully");
-      setError(false);
-      setTitle("");
-      setFile(null);
-    } catch (err) {
-      console.error(err);
-      setMessage("Failed to upload notice");
-      setError(true);
-    }
-  };
+  try {
+    await axios.post("http://localhost:5000/api/importantlinks", formData, {
+      headers: { "Content-Type": "multipart/form-data" }
+    });
+    setMessage("Notice uploaded successfully");
+    setError(false);
+    setTitle("");
+    setFile(null);
+    setUrl("");
+  } catch (err) {
+    console.error(err);
+    setMessage("Failed to upload notice");
+    setError(true);
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit} encType="multipart/form-data" style={styles.container}>
-      <h3 style={{ textAlign: "center" }}>Add Important Link</h3>
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-        style={styles.input}
-      />
-      <input
-        type="file"
-        onChange={(e) => setFile(e.target.files[0])}
-        required
-        style={styles.input}
-      />
-      <button type="submit" style={styles.button}>
-        <FaLink /> Upload
-      </button>
-      {message && (
-        <div style={{ ...styles.message, ...(error ? styles.error : styles.success) }}>
-          {error ? <FaTimesCircle /> : <FaCheckCircle />} {message}
-        </div>
-      )}
-    </form>
+  <h3 style={{ textAlign: "center" }}>Add Important Link</h3>
+
+  <input
+    type="text"
+    placeholder="Title"
+    value={title}
+    onChange={(e) => setTitle(e.target.value)}
+    required
+    style={styles.input}
+  />
+
+  <label>Upload File:</label>
+  <input
+    type="file"
+    onChange={(e) => setFile(e.target.files[0])}
+    style={styles.input}
+  />
+
+  <label>Or Enter URL:</label>
+  <input
+    type="url"
+    placeholder="https://example.com"
+    value={url}
+    onChange={(e) => setUrl(e.target.value)}
+    style={styles.input}
+  />
+
+  <button type="submit" style={styles.button}>
+    <FaLink /> Upload
+  </button>
+
+  {message && (
+    <div style={{ ...styles.message, ...(error ? styles.error : styles.success) }}>
+      {error ? <FaTimesCircle /> : <FaCheckCircle />} {message}
+    </div>
+  )}
+</form>
+
   );
 };
 

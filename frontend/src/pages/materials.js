@@ -9,9 +9,10 @@ const Materials = () => {
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/materials/${topicId}`);
+        const res = await fetch(
+          `http://localhost:5000/api/materials/${topicId}`
+        );
         const data = await res.json();
-        console.log("Fetched materials:", data); // ✅ Add this
         setMaterials(data);
       } catch (error) {
         console.error("Error fetching materials:", error);
@@ -21,7 +22,7 @@ const Materials = () => {
     };
     fetchMaterials();
   }, [topicId]);
-  
+
   return (
     <div style={{ padding: "2rem" }}>
       <h2 style={{ textTransform: "capitalize" }}>{topicId} Materials</h2>
@@ -32,13 +33,19 @@ const Materials = () => {
         <ul>
           {materials.map((mat) => (
             <li key={mat._id} style={{ marginBottom: "10px" }}>
-              <a
-                href={`http://localhost:5000/uploads/${mat.filename}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {mat.title}
-              </a>
+              {mat.url ? (
+                <a href={mat.url} target="_blank" rel="noreferrer">
+                  {mat.title}
+                </a>
+              ) : (
+                <a
+                  href={`http://localhost:5000/uploads/${mat.filename}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {mat.title}
+                </a>
+              )}
             </li>
           ))}
         </ul>

@@ -11,24 +11,38 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname)),
 });
 const upload = multer({ storage });
+const uploadMiddleware = upload.single("file");
 
+router.post("/upload", (req, res) => {
+  uploadMiddleware(req, res, async function (err) {
+    if (err) {
+      console.error("Multer error:", err);
+      return res.status(500).json({ error: "File upload error" });
+    }
 
-router.post("/upload", upload.single("file"), async (req, res) => {
-  try {
-    const { title, topic } = req.body;
-    const newMaterial = new Material({
-      title,
-      topic: topic.toLowerCase(),
-      filename: req.file.filename,
-    });
-    await newMaterial.save();
-    res.status(201).json({ message: "Material uploaded successfully" });
-  } catch (err) {
-    console.error("Upload error:", err);
-    res.status(500).json({ error: "Server error during upload" });
-  }
+    try {
+      const { title, topic, url } = req.body;
+
+      if (!title || !topic || (!req.file && !url)) {
+        return res.status(400).json({ error: "Title, topic and file or URL are required" });
+      }
+
+      const newMaterial = new Material({
+        title,
+        topic: topic.toLowerCase(),
+        filename: req.file ? req.file.filename : null,
+        originalname: req.file ? req.file.originalname : null,
+        url: url || null,
+      });
+
+      await newMaterial.save();
+      return res.status(201).json({ message: "Material uploaded successfully" });
+    } catch (error) {
+      console.error("Server error:", error);
+      return res.status(500).json({ error: "Server error" });
+    }
+  });
 });
-
 router.get("/", async (req, res) => {
   try {
     const materials = await Material.find();
