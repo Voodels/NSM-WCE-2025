@@ -23,13 +23,16 @@ const topics = [
     description: "Explore large-scale data processing and analysis methods.",
   },
 ];
-
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const STATIC_BASE_URL=process.env.REACT_APP_STATIC_URL;
+console.log("BAse URl:", API_BASE_URL);
+console.log("Static Url:",STATIC_BASE_URL);
 const Home = () => {
   const navigate = useNavigate();
   const [eventPhotos, setEventPhotos] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/eventphotos")
+    fetch(`${API_BASE_URL}/eventphotos`)
       .then((res) => res.json())
       .then((data) => setEventPhotos(data))
       .catch((err) => console.error("Event photos error:", err));
@@ -38,7 +41,7 @@ const Home = () => {
   const [importantLinks, setImportantLinks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/importantlinks")
+    fetch(`${API_BASE_URL}/importantlinks`)
       .then((res) => res.json())
       .then((data) => setImportantLinks(data));
   }, []);
@@ -48,7 +51,7 @@ const Home = () => {
   useEffect(() => {
     const fetchCoordinators = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/coordinators");
+        const res = await fetch(`${API_BASE_URL}/coordinators`);
         const data = await res.json();
         setCoordinators(data);
       } catch (err) {
@@ -62,7 +65,7 @@ const Home = () => {
   const [sisterCenters, setSisterCenters] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/sisternodal")
+    fetch(`${API_BASE_URL}/sisternodal`)
       .then((res) => res.json())
       .then((data) => setSisterCenters(data));
   }, []);
@@ -102,7 +105,7 @@ const Home = () => {
           attendees will be provided with depth-in knowledge of computation
           power, utilization and applications in the field of HPC. The Faculty
           Development Program (FDP) on OpenMP, MPI, and CUDA is proud to
-          collaborate with esteemed organizations such as CDAC, NVidia, Intel,
+          collaborate with esteemed organizations such as CDAC, Navidia, Intel,
           AMD, and renowned research organizations. These collaborations aim to
           bring the latest expertise, resources, and industry insights to the
           program, ensuring participants receive high-quality training and
@@ -142,7 +145,7 @@ const Home = () => {
                 key={photo._id}
               >
                 <img
-                  src={`http://localhost:5000/uploads/${photo.filename}`}
+                  src={`${STATIC_BASE_URL}/uploads/${photo.filename}`}
                   className="d-block w-100"
                   alt={`Event ${index}`}
                   style={{ height: "500px", objectFit: "cover" }}
@@ -261,7 +264,7 @@ const Home = () => {
                 </a>
               ) : (
                 <a
-                  href={`http://localhost:5000/uploads/${link.filename}`}
+                  href={`${STATIC_BASE_URL}/uploads/${link.filename}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -294,7 +297,7 @@ const Home = () => {
           {coordinators.map((coordinator, index) => (
             <div key={index} style={{ textAlign: "center" }}>
               <img
-                src={`http://localhost:5000/uploads/${coordinator.photo}`}
+                src={`${STATIC_BASE_URL}/uploads/${coordinator.photo}`}
                 alt={coordinator.name}
                 style={{
                   width: "100px",
@@ -327,7 +330,7 @@ const Home = () => {
             <div key={index}>
               <a href={node.website} target="_blank" rel="noreferrer">
                 <img
-                  src={`http://localhost:5000/uploads/${node.photo}`}
+                  src={`${STATIC_BASE_URL}/uploads/${node.photo}`}
                   alt={node.name}
                   style={{
                     width: "100px",

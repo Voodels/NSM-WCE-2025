@@ -2,17 +2,21 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const STATIC_BASE_URL=process.env.REACT_APP_STATIC_URL;
+
+
 const ViewSisterNodals = () => {
   const [nodes, setNodes] = useState([]);
 
   const fetchNodes = async () => {
-    const res = await axios.get("http://localhost:5000/api/sisternodal");
+    const res = await axios.get(`${API_BASE_URL}/sisternodal`);
     setNodes(res.data);
   };
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this nodal center?")) {
-      await axios.delete(`http://localhost:5000/api/sisternodal/${id}`);
+      await axios.delete(`${API_BASE_URL}/sisternodal/${id}`);
       fetchNodes();
     }
   };
@@ -28,7 +32,7 @@ const ViewSisterNodals = () => {
         {nodes.map((node) => (
           <div key={node._id} style={{ textAlign: "center" }}>
             <img
-              src={`http://localhost:5000/uploads/${node.photo}`}
+              src={`${STATIC_BASE_URL}/uploads/${node.photo}`}
               alt={node.name}
               style={{
                 width: "100px",

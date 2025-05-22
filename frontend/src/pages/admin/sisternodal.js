@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaCheckCircle, FaTimesCircle, FaPlus } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+
+
+
 const AddSisterNodal = () => {
   const [formData, setFormData] = useState({ name: "", url: "" });
   const [image, setImage] = useState(null);
@@ -16,7 +20,7 @@ const AddSisterNodal = () => {
     data.append("image", image);
 
     try {
-      await axios.post("http://localhost:5000/api/sisternodal", data, {
+      await axios.post(`${API_BASE_URL}/sisternodal`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setMessage("Sister Nodal Center added successfully!");

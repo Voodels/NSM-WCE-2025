@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { FaUpload, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+
+
+
 const UploadMaterial = () => {
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("openmp");
@@ -19,7 +23,7 @@ const UploadMaterial = () => {
     if (url) formData.append("url", url);
 
     try {
-      const res = await fetch("http://localhost:5000/api/materials/upload", {
+      const res = await fetch(`${API_BASE_URL}/materials/upload`, {
         method: "POST",
         body: formData,
       });

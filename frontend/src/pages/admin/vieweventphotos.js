@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const STATIC_BASE_URL=process.env.REACT_APP_STATIC_URL;
+
 const ViewEventPhotos = () => {
   const [photos, setPhotos] = useState([]);
 
   const fetchPhotos = async () => {
-    const res = await axios.get("http://localhost:5000/api/eventphotos");
+    const res = await axios.get(`${API_BASE_URL}/eventphotos`);
     setPhotos(res.data);
   };
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this photo?")) {
-      await axios.delete(`http://localhost:5000/api/eventphotos/${id}`);
+      await axios.delete(`${API_BASE_URL}/eventphotos/${id}`);
       fetchPhotos();
     }
   };
@@ -28,7 +31,7 @@ const ViewEventPhotos = () => {
         {photos.map((photo) => (
           <div key={photo._id} style={{ textAlign: "center" }}>
             <img
-              src={`http://localhost:5000/uploads/${photo.filename}`}
+              src={`${STATIC_BASE_URL}/uploads/${photo.filename}`}
               alt="event"
               style={{ width: "150px", height: "150px", objectFit: "cover" }}
             />

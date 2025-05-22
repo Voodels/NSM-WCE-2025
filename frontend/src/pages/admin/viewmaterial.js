@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const STATIC_BASE_URL=process.env.REACT_APP_STATIC_URL;
+
+
 const ViewMaterials = () => {
   const [materials, setMaterials] = useState([]);
 
   const fetchMaterials = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/materials");
+      const res = await axios.get(`${API_BASE_URL}/materials`);
       setMaterials(res.data);
     } catch (err) {
       console.error("Error fetching materials:", err);
@@ -17,7 +21,7 @@ const ViewMaterials = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this material?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/materials/${id}`);
+        await axios.delete(`${API_BASE_URL}/materials/${id}`);
         fetchMaterials();
       } catch (err) {
         console.error("Error deleting material:", err);
@@ -48,7 +52,7 @@ const ViewMaterials = () => {
               <td style={tdStyle}>{mat.topic}</td>
               <td style={tdStyle}>
                 <a
-                  href={`http://localhost:5000/uploads/${mat.filename}`}
+                  href={`${STATIC_BASE_URL}/uploads/${mat.filename}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

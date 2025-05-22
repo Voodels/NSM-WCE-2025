@@ -2,17 +2,21 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const STATIC_BASE_URL=process.env.REACT_APP_STATIC_URL;
+
+
 const ViewImportantLinks = () => {
   const [links, setLinks] = useState([]);
 
   const fetchLinks = async () => {
-    const res = await axios.get("http://localhost:5000/api/importantlinks");
+    const res = await axios.get(`${API_BASE_URL}/importantlinks`);
     setLinks(res.data);
   };
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this link?")) {
-      await axios.delete(`http://localhost:5000/api/importantlinks/${id}`);
+      await axios.delete(`${API_BASE_URL}/importantlinks/${id}`);
       fetchLinks();
     }
   };
@@ -39,7 +43,7 @@ const ViewImportantLinks = () => {
             }}
           >
             <a
-              href={`http://localhost:5000/uploads/${link.filename}`}
+              href={`${STATIC_BASE_URL}/uploads/${link.filename}`}
               target="_blank"
               rel="noreferrer"
               style={{ color: "black", textDecoration: "none" }}

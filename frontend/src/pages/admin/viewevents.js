@@ -2,18 +2,29 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const STATIC_BASE_URL = process.env.REACT_APP_STATIC_URL;
+
 const ViewEvents = () => {
   const [events, setEvents] = useState([]);
 
   const fetchEvents = async () => {
-    const res = await axios.get("http://localhost:5000/api/events");
-    setEvents(res.data);
+    try {
+      const res = await axios.get(`${API_BASE_URL}/events`);
+      setEvents(res.data);
+    } catch (err) {
+      console.error("Error fetching events:", err);
+    }
   };
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this event report?")) {
-      await axios.delete(`http://localhost:5000/api/events/${id}`);
-      fetchEvents();
+      try {
+        await axios.delete(`${API_BASE_URL}/events/${id}`);
+        fetchEvents();
+      } catch (err) {
+        console.error("Error deleting event:", err);
+      }
     }
   };
 
@@ -30,6 +41,9 @@ const ViewEvents = () => {
             <th style={thStyle}>Title</th>
             <th style={thStyle}>Month</th>
             <th style={thStyle}>Year</th>
+            <th style={thStyle}>Location</th>
+            <th style={thStyle}>Participants</th>
+            <th style={thStyle}>Summary</th>
             <th style={thStyle}>Report</th>
             <th style={thStyle}>Action</th>
           </tr>
@@ -40,14 +54,21 @@ const ViewEvents = () => {
               <td style={tdStyle}>{event.title}</td>
               <td style={tdStyle}>{event.month}</td>
               <td style={tdStyle}>{event.year}</td>
+              <td style={tdStyle}>{event.location}</td>
+              <td style={tdStyle}>{event.participants}</td>
+              <td style={tdStyle}>{event.summary}</td>
               <td style={tdStyle}>
-                <a
-                  href={`http://localhost:5000/uploads/${event.filename}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View
-                </a>
+                {event.filename ? (
+                  <a
+                    href={`${STATIC_BASE_URL}/uploads/${event.filename}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View
+                  </a>
+                ) : (
+                  "No File"
+                )}
               </td>
               <td style={tdStyle}>
                 <button onClick={() => handleDelete(event._id)} style={btnStyle}>
@@ -62,8 +83,25 @@ const ViewEvents = () => {
   );
 };
 
-const thStyle = { borderBottom: "1px solid #ccc", padding: "10px", textAlign: "left" };
-const tdStyle = { padding: "10px", borderBottom: "1px solid #eee" };
-const btnStyle = { backgroundColor: "red", color: "white", padding: "6px 12px", border: "none", borderRadius: "4px", cursor: "pointer" };
+const thStyle = {
+  borderBottom: "1px solid #ccc",
+  padding: "10px",
+  textAlign: "left",
+  backgroundColor: "#f5f5f5",
+};
+
+const tdStyle = {
+  padding: "10px",
+  borderBottom: "1px solid #eee",
+};
+
+const btnStyle = {
+  backgroundColor: "red",
+  color: "white",
+  padding: "6px 12px",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+};
 
 export default ViewEvents;

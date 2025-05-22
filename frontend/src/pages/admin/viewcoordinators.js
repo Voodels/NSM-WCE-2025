@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const STATIC_BASE_URL=process.env.REACT_APP_STATIC_URL;
+
+
 const ViewCoordinators = () => {
   const [coordinators, setCoordinators] = useState([]);
 
   const fetchCoordinators = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/coordinators");
+      const res = await axios.get(`${API_BASE_URL}/coordinators`);
       setCoordinators(res.data);
     } catch (err) {
       console.error("Error fetching coordinators:", err);
@@ -17,7 +21,7 @@ const ViewCoordinators = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this coordinator?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/coordinators/${id}`);
+        await axios.delete(`${API_BASE_URL}/coordinators/${id}`);
         fetchCoordinators();
       } catch (err) {
         console.error("Error deleting coordinator:", err);
@@ -52,7 +56,7 @@ const ViewCoordinators = () => {
             }}
           >
             <img
-              src={`http://localhost:5000/uploads/${coordinator.photo}`}
+              src={`${STATIC_BASE_URL}/uploads/${coordinator.photo}`}
               alt={coordinator.name}
               style={{
                 width: "100px",

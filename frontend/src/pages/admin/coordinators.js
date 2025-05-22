@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaCheckCircle, FaTimesCircle, FaUserPlus } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+
+
+
 const AddCoordinator = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -21,7 +25,7 @@ const AddCoordinator = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/coordinators", data, {
+      await axios.post(`${API_BASE_URL}/coordinators`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setMessage("Coordinator added successfully!");

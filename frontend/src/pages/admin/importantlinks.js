@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaCheckCircle, FaTimesCircle, FaLink } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+
+
 const AddImportantLink = () => {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
@@ -17,7 +20,7 @@ const AddImportantLink = () => {
   if (url) formData.append("url", url);
 
   try {
-    await axios.post("http://localhost:5000/api/importantlinks", formData, {
+    await axios.post(`${API_BASE_URL}/importantlinks`, formData, {
       headers: { "Content-Type": "multipart/form-data" }
     });
     setMessage("Notice uploaded successfully");

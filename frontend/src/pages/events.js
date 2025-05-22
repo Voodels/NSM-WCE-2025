@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const STATIC_BASE_URL=process.env.REACT_APP_STATIC_URL;
+
 const Events = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/events");
+        const res = await axios.get(`${API_BASE_URL}/events`);
         setEvents(res.data);
       } catch (err) {
         console.error("Error fetching reports:", err);
@@ -19,7 +22,7 @@ const Events = () => {
 
   return (
     <div style={{ padding: "2rem", fontFamily: "Segoe UI, sans-serif" }}>
-      <h2 style={{ marginBottom: "20px", color: "#003366" }}>Event Reports</h2>
+      <h2 style={{ marginBottom: "20px", color: "#003366", justifyContent:"center", textAlign:"center" }}>Event Reports</h2>
 
       {events.length === 0 ? (
         <p>No events uploaded yet.</p>
@@ -27,9 +30,12 @@ const Events = () => {
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr>
-              <th style={thStyle}>Title</th>
+              <th style={thStyle}>Events</th>
               <th style={thStyle}>Month</th>
               <th style={thStyle}>Year</th>
+              <th style={thStyle}>Location</th>
+              <th style={thStyle}>No. Of Participants</th>
+              <th style={thStyle}>Agenda</th>
               <th style={thStyle}>Report</th>
             </tr>
           </thead>
@@ -39,9 +45,12 @@ const Events = () => {
                 <td style={tdStyle}>{event.title}</td>
                 <td style={tdStyle}>{event.month}</td>
                 <td style={tdStyle}>{event.year}</td>
+                <td style={tdStyle}>{event.location}</td>
+                <td style={tdStyle}>{event.participants}</td>
+                <td style={tdStyle}>{event.summary}</td>
                 <td style={tdStyle}>
                   <a
-                    href={`http://localhost:5000/uploads/${event.filename}`}
+                    href={`${STATIC_BASE_URL}/uploads/${event.filename}`}
                     target="_blank"
                     rel="noreferrer"
                     style={{
@@ -63,6 +72,7 @@ const Events = () => {
 };
 
 const thStyle = {
+  textAlign: "center",
   padding: "10px",
   background: "#004080",
   color: "white",

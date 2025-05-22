@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaUpload, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+
+
 const AddEventPhoto = () => {
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
@@ -13,7 +16,7 @@ const AddEventPhoto = () => {
     formData.append("image", image);
 
     try {
-      await axios.post("http://localhost:5000/api/eventphotos", formData);
+      await axios.post(`${API_BASE_URL}/eventphotos`, formData);
       setMessage("Event photo uploaded!");
       setError(false);
       setImage(null);

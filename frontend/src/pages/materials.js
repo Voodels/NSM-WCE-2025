@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const STATIC_BASE_URL=process.env.REACT_APP_STATIC_URL;
+
+
 const Materials = () => {
   const { topicId } = useParams();
   const [materials, setMaterials] = useState([]);
@@ -10,7 +14,7 @@ const Materials = () => {
     const fetchMaterials = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/materials/${topicId}`
+          `${API_BASE_URL}/materials/${topicId}`
         );
         const data = await res.json();
         setMaterials(data);
@@ -39,7 +43,7 @@ const Materials = () => {
                 </a>
               ) : (
                 <a
-                  href={`http://localhost:5000/uploads/${mat.filename}`}
+                  href={`${STATIC_BASE_URL}/uploads/${mat.filename}`}
                   target="_blank"
                   rel="noreferrer"
                 >
