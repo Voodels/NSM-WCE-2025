@@ -142,7 +142,7 @@ const Home = () => {
       </section>
       
       {/* Important Links Section */}
-      {/* <section style={{ marginTop: "20px", textAlign: "center" }}>
+      <section style={{ marginTop: "20px", textAlign: "center" }}>
         <h2
           style={{
             background: "#004080",
@@ -196,7 +196,7 @@ const Home = () => {
             </li>
           ))}
         </ul>
-      </section> */}
+      </section>
 
       {/* Coordinators Section */}
       <section style={{ marginTop: "20px", textAlign: "center" }}>
