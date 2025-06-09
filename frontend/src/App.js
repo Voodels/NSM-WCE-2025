@@ -13,6 +13,8 @@ import Materials from "./pages/materials";
 import AdminLogin from "./pages/adminlogin";
 import Dashboard from "./pages/admin/dashboard";
 import Events from "./pages/events";
+import Trainings from "./pages/trainings";
+import Gallery from "./pages/gallery"
 import Contact from "./pages/contact";
 
 
@@ -27,6 +29,8 @@ const ConditionalLayout = () => {
         <Route path="/" element={<Home />} />
         <Route path="/materials/:topicId" element={<Materials />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/trainings" element={<Trainings />} />
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/*" element={<Dashboard />} />

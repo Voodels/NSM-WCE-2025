@@ -1,44 +1,50 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { IoInformationCircle } from "react-icons/io5";
+import { FaHome,FaBook, FaCalendarAlt } from "react-icons/fa";
+import { MdOutlineContactMail } from "react-icons/md";
 
-const AdminNavbar = () => {
+const Navbar = () => {
   return (
     <>
-   
-    <nav
+      <nav
         style={{
           display: "flex",
           position: "sticky",
           alignItems: "center",
           justifyContent: "center",
           padding: "10px",
-          background: "#004080", 
-          color: "white",
+          background: "white", 
+          color: "#004080",
           top: 0,
           zIndex: 99,
-          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+          fontFamily: "roboto",
+          height:"100px",
         }}
       >
         <img
-          src="/nsm-logo.jpeg"
+          src="/wce-logo.png"
           alt="Logo 1"
-          style={{ height: "50px", marginRight: "10px" }}
+          style={{ height: "60px", marginRight: "10px" }}
         />
         <div style={{ textAlign: "center" }}>
-          <h1 style={{ margin: "0", fontSize: "20px" }}>
+          <h1 style={{ margin: "0", fontSize: "40px", fontWeight:"bold"}}>
             NSM Center for Training in HPC
           </h1>
-          <h2 style={{ margin: "0", fontSize: "16px" }}>
+          <h3 style={{ margin: "0", fontSize: "20px" }}>
             Walchand College of Engineering, Sangli
-          </h2>
+          </h3>
         </div>
         <img
-          src="/wce-logo.jpeg"
+          src="/nsm-logo.png"
           alt="Logo 2"
-          style={{ height: "50px", marginLeft: "10px" }}
+          style={{ height: "60px", marginLeft: "10px" }}
         />
       </nav>
-      </>
+
+
+    </>
   );
 };
 
-export default AdminNavbar;
+export default Navbar;

@@ -74,6 +74,7 @@ const UploadMaterial = () => {
             <option value="openmp">OpenMP</option>
             <option value="mpi">MPI</option>
             <option value="cuda">CUDA</option>
+            <option value="ai">AI</option>
           </select>
         </div>
 

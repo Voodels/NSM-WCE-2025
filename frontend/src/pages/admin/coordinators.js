@@ -10,6 +10,7 @@ const AddCoordinator = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    url:"",
   });
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
@@ -20,6 +21,7 @@ const AddCoordinator = () => {
     const data = new FormData();
     data.append("name", formData.name);
     data.append("email", formData.email);
+    data.append("url", formData.url);
     if (image) {
       data.append("photo", image);
     }
@@ -29,7 +31,7 @@ const AddCoordinator = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setMessage("Coordinator added successfully!");
-      setFormData({ name: "", email: "" });
+      setFormData({ name: "", email: "", url:"" });
       setImage(null);
       setError(false);
     } catch (err) {
@@ -115,6 +117,17 @@ const AddCoordinator = () => {
           placeholder="Email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          required
+          style={styles.input}
+        />
+      </div>
+       <div style={styles.inputGroup}>
+        <label style={styles.label}>Url</label>
+        <input
+          type="url"
+          placeholder="Portfolio URL"
+          value={formData.url}
+          onChange={(e) => setFormData({ ...formData, url: e.target.value })}
           required
           style={styles.input}
         />

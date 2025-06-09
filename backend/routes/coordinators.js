@@ -15,10 +15,10 @@ const upload = multer({ storage });
 // POST: Add coordinator
 router.post("/", upload.single("photo"), async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, url} = req.body;
     const photo = req.file ? req.file.filename : null;
 
-    const newCoordinator = new Coordinator({ name, email, photo });
+    const newCoordinator = new Coordinator({ name, email,url, photo });
     await newCoordinator.save();
 
     res.status(201).json({ message: "Coordinator added successfully" });
@@ -39,8 +39,25 @@ router.get("/", async (req, res) => {
     }
   });
   
+//EDIT 
+router.put("/:id", upload.single("photo"), async (req, res) => {
+  try {
+    const { name, email, url } = req.body;
 
-// DELETE: Remove a coordinator by ID
+    const updatedFields = { name, email, url };
+    if (req.file) {
+      updatedFields.photo = req.file.filename;
+    }
+
+    await Coordinator.findByIdAndUpdate(req.params.id, updatedFields);
+    res.json({ message: "Coordinator updated successfully" });
+  } catch (err) {
+    console.error("Update error:", err);
+    res.status(500).json({ error: "Failed to update coordinator" });
+  }
+});
+
+// DELETE
 router.delete("/:id", async (req, res) => {
     try {
       const id = req.params.id;

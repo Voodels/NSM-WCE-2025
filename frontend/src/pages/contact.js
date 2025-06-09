@@ -5,7 +5,13 @@ import { FaMapPin } from "react-icons/fa";
 const Contact = () => {
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading}><MdOutlineContactMail style={{marginRight:"8px"}}/>Contact Us</h2>
+      <h2 style={{
+          marginBottom: "20px",
+          color: "#003366",
+          justifyContent: "center",
+          textAlign: "center",
+          fontFamily:"Montserrat"
+        }}>Contact Us</h2>
 
       <div style={styles.infoBox}>
         <h3><FaMapPin style={{marginRight:"8px"}} /> Address:</h3>

@@ -14,14 +14,16 @@ const upload = multer({ storage });
 // Upload event image
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ error: "No image uploaded" });
-
-    const newPhoto = new EventPhoto({ filename: req.file.filename });
+    const { caption } = req.body;
+    const newPhoto = new EventPhoto({
+      filename: req.file.filename,
+      caption: caption || "", 
+    });
     await newPhoto.save();
-    res.status(201).json({ message: "Photo uploaded" });
+    res.status(201).json({ message: "Photo uploaded successfully" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
+    console.error("Upload error:", err);
+    res.status(500).json({ error: "Failed to upload event photo" });
   }
 });
 

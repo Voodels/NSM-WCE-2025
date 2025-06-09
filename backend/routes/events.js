@@ -47,6 +47,26 @@ router.post("/", upload.single("file"), async (req, res) => {
   }
 });
 
+// UPDATE event
+router.put("/:id", async (req, res) => {
+  try {
+    const { title, month, year, location, participants, summary } = req.body;
+
+    const updated = await Event.findByIdAndUpdate(
+      req.params.id,
+      { title, month, year, location, participants, summary },
+      { new: true }
+    );
+
+    if (!updated) return res.status(404).json({ message: "Event not found" });
+
+    res.json({ message: "Event updated successfully", event: updated });
+  } catch (err) {
+    console.error("Error updating event:", err);
+    res.status(500).json({ error: "Failed to update event" });
+  }
+});
+
 // DELETE event by ID
 router.delete("/:id", async (req, res) => {
   try {

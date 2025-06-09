@@ -100,13 +100,13 @@ const Dashboard = () => {
             </li>
             <li style={{ marginBottom: "20px" }}>
               <Link to="/admin/sisternodal" style={linkStyle}>
-                <FaUniversity style={{ marginRight: "8px" }} /> Sister Nodal
+                <FaUniversity style={{ marginRight: "8px" }} /> Nodal
                 Centers
               </Link>
             </li>
             <li style={{ marginBottom: "20px" }}>
               <Link to="/admin/sister-nodals" style={linkStyle}>
-                <FaBookOpen style={{ marginRight: "8px" }} /> View Sister Nodal
+                <FaBookOpen style={{ marginRight: "8px" }} /> View Nodal
               </Link>
             </li>
             

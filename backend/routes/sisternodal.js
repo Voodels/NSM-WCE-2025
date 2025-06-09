@@ -14,13 +14,16 @@ const upload = multer({ storage });
 // Upload Sister Nodal with image and name
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name,url } = req.body;
     if (!req.file) return res.status(400).json({ error: "No image uploaded" });
     if (!name) return res.status(400).json({ error: "Name is required" });
+    if (!url) return res.status(400).json({ error: "URL is required" });
 
     const newNode = new SisterNodal({
       name,
+      url,
       photo: req.file.filename,
+      
     });
     await newNode.save();
     res.status(201).json({ message: "Uploaded" });

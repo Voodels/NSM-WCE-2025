@@ -21,8 +21,13 @@ const Events = () => {
   }, []);
 
   return (
-    <div style={{ padding: "2rem", fontFamily: "Segoe UI, sans-serif" }}>
-      <h2 style={{ marginBottom: "20px", color: "#003366", justifyContent:"center", textAlign:"center" }}>Event Reports</h2>
+    <div style={{ padding: "2rem", fontFamily: "Montserrat" }}>
+      <h2 style={{ background: "#004080",
+            width:"100%",
+            height: "50px",
+            color: "white",
+            justifyContent:"center",
+            textAlign:"center", }}>Event Reports</h2>
 
       {events.length === 0 ? (
         <p>No events uploaded yet.</p>
@@ -31,8 +36,7 @@ const Events = () => {
           <thead>
             <tr>
               <th style={thStyle}>Events</th>
-              <th style={thStyle}>Month</th>
-              <th style={thStyle}>Year</th>
+              <th style={thStyle}>Conducted on</th>
               <th style={thStyle}>Location</th>
               <th style={thStyle}>No. Of Participants</th>
               <th style={thStyle}>Agenda</th>
@@ -43,8 +47,7 @@ const Events = () => {
             {events.map((event) => (
               <tr key={event._id}>
                 <td style={tdStyle}>{event.title}</td>
-                <td style={tdStyle}>{event.month}</td>
-                <td style={tdStyle}>{event.year}</td>
+                <td style={tdStyle}>{event.month}, {event.year}</td>
                 <td style={tdStyle}>{event.location}</td>
                 <td style={tdStyle}>{event.participants}</td>
                 <td style={tdStyle}>{event.summary}</td>
