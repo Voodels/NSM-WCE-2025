@@ -7,6 +7,7 @@ const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 const STATIC_BASE_URL = process.env.REACT_APP_STATIC_URL;
 console.log("BAse URl:", API_BASE_URL);
 console.log("Static Url:", STATIC_BASE_URL);
+
 const Home = () => {
   const navigate = useNavigate();
   const [eventPhotos, setEventPhotos] = useState([]);
