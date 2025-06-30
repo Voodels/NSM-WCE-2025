@@ -1,19 +1,16 @@
+version: '3.8'
 
 services:
   backend:
     build: ./backend
     ports:
       - "5000:5000"
-    environment:
-      - MONGODB_URI=${MONGODB_URI}
-      - PORT=${PORT}
-      - JWT_SECRET=${JWT_SECRET}
+    env_file:
+      - ./backend/.env
     volumes:
       - ./backend/uploads:/app/uploads
     networks:
       - nsm-network
-    env_file:  # Only declare once
-      - .env
 
   frontend:
     build: ./frontend
